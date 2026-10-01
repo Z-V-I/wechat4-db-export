@@ -1,0 +1,4 @@
+# wxbak 运行依赖
+# 安装：python -m pip install -r requirements.txt
+pycryptodome>=3.19     # AES-CBC（SQLCipher 页解密）
+zstandard>=0.22        # 微信消息体的 zstd 解压（WCDB_CT_message_content=4）

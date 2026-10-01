@@ -1,0 +1,26 @@
+# ---- 隐私产物：绝对不要提交 ----
+keys/
+work/
+导出/
+*.db
+*.db-wal
+*.db-shm
+all_keys.json
+*.txt
+!requirements.txt
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+
+# ---- 编辑器 / 系统 ----
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
