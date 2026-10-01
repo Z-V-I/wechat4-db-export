@@ -295,12 +295,28 @@ README.md                 面向人类的介绍与安装说明
 LICENSE                   MIT
 requirements.txt          运行依赖
 .gitignore                屏蔽 keys/ work/ 等隐私产物
+.gitattributes            统一换行（LF），二进制文件不做转换
 scripts/
   wxbak.py                统一入口：selftest/doctor/accounts/extract/refresh/list/export/all/version
   wcdb_key.py             取密钥（4.1 Config.Cipher 路线），移植自 wcdb-key-tool
+  prepublish_check.py     开源发布前的隐私自检（拦截密钥/聊天记录/令牌/本机路径）
   keys/                   密钥（git 忽略；可用 WXBAK_HOME 重定位）
   work/                   解密产物（git 忽略）
 ```
+
+## 开源 / 二次开发前必做
+
+本仓库天生接触敏感数据。**提交或发 PR 前先跑隐私自检**（退出码 0 通过 / 1 有风险）：
+
+```bash
+python scripts/prepublish_check.py          # 检查暂存区（默认）
+python scripts/prepublish_check.py --all    # 检查全部已跟踪文件（适合 CI）
+```
+
+它拦截三类风险：不该被跟踪的文件（`*.db` / `keys/` / `work/` / 导出 txt）、文件内容里的敏感串（wxid、hex 密钥、`ghp_` 令牌、本机绝对路径）、明文凭据赋值。
+注意「XOR 掩码 / 特征串」这类公开二进制常量会被降级为提示，不算风险。
+
+> 若敏感内容**曾经被提交过**，改 `.gitignore` 无效 —— 必须用 `git filter-repo` 清洗历史后强推。
 
 ## 边界 & 纪律
 
